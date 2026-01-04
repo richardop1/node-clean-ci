@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      target: base
+    volumes:
+      - .:/app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    enviromenment:
+      DB_HOST: postgres
+      DB_PORT: 5433
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: task-db
+
+  postgres:
+    image: postgres:15.3
+    environment:
+      POSTGRES_DB: task-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
